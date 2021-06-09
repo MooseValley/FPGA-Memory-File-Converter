@@ -63,6 +63,12 @@ public class Ep32Ram
          }
       }
 
+
+      System.out.println ("Size: " + ep32RamArrayList.size() + " * 8 = " + (ep32RamArrayList.size() * 8) );
+      System.out.println ((1.0 * ep32RamArrayList.size() * 8 / 64) );
+
+
+
       // Convert ep32RamArrayList to INIT lines.
 
 
@@ -74,7 +80,6 @@ public class Ep32Ram
       int charIndexCount = 0;
       int initLinesRow   = 0;
       int initLinesCol   = 0;
-      System.out.println ("Size: " + ep32RamArrayList.size() + " * 8 = " + (ep32RamArrayList.size() * 8) );
 
       while (ep32LineCount < ep32RamArrayList.size() )
       {
@@ -101,19 +106,6 @@ public class Ep32Ram
       }
       */
 
-      for (int col = 0; col < 8; col++)
-      {
-         StringBuilder sb    = new StringBuilder();
-
-         for (int row = 0; row < ep32RamArrayList.size(); row++)
-         {
-            sb.append (ep32RamArrayList.get(row).charAt (col);
-         }
-
-
-      }
-
-
 
 
       /*
@@ -131,7 +123,40 @@ public class Ep32Ram
 
       /*
       For each line in ep32RamArrayList get the FIRST (left-most) digit and
-      append in onto INIT line .
+      append in onto a line.
+      When all lines have bene processed for the FIRST digit, add the line to initLinesArrayList.
+      When the processing below is finished, initLinesArrayList will consist of 8 lines of data.
+      */
+
+      int numCharsWithFullLinesOfData = 64 * 64;
+      int numZeroesToPad              = numCharsWithFullLinesOfData - ep32RamArrayList.size() * 8;
+      int numFullLinesOfData          = numCharsWithFullLinesOfData / 64;
+
+      System.out.println ("Lines of Data:                        " + (1.0 * ep32RamArrayList.size() / 64) );
+      System.out.println ("Zeroes to append to each line:        " + numZeroesToPad );
+      System.out.println ("Resulting Full 64 byte lines of data: " + numFullLinesOfData );
+
+      initLinesArrayList = new  ArrayList<>();
+
+      for (int col = 0; col < 8; col++)
+      {
+         StringBuilder sb    = new StringBuilder();
+
+         for (int row = 0; row < ep32RamArrayList.size(); row++)
+         {
+            sb.append (ep32RamArrayList.get(row).charAt (col) );
+         }
+
+         for (int pad = 0; pad < numZeroesToPad; pad++)
+         {
+            sb.append ('0');
+         }
+
+         initLinesArrayList.add (sb.toString() );
+
+      }
+
+      /*
       When it is 64 chars long, move onto next init line.
       */
 
@@ -139,6 +164,7 @@ public class Ep32Ram
 
 
 
+/*
       for (int row = 0; row < initLines.length; row++)
       {
          for (int col = 0; col < initLines[row].length; col++)
@@ -148,6 +174,13 @@ public class Ep32Ram
 
          System.out.println ();
       }
+*/
+/*
+         for (int row = 0; row < initLinesArrayList.size(); row++)
+         {
+            System.out.println (initLinesArrayList.get(row) );
+         }
+*/
 
    }
 
