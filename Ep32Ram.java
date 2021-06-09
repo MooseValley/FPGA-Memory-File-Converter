@@ -129,7 +129,7 @@ public class Ep32Ram
       */
 
       int numCharsWithFullLinesOfData = 64 * 64;
-      int numZeroesToPad              = numCharsWithFullLinesOfData - ep32RamArrayList.size() * 8;
+      int numZeroesToPad              = numCharsWithFullLinesOfData - ep32RamArrayList.size();
       int numFullLinesOfData          = numCharsWithFullLinesOfData / 64;
 
       System.out.println ("Lines of Data:                        " + (1.0 * ep32RamArrayList.size() / 64) );
@@ -181,6 +181,51 @@ public class Ep32Ram
             System.out.println (initLinesArrayList.get(row) );
          }
 */
+
+/*
+            INIT_00 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_01 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
+            INIT_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
+*/
+         int index = 0;
+         StringBuilder sb    = new StringBuilder();
+
+
+         for (int initRow = 0; initRow < initLinesArrayList.size(); initRow++)
+         {
+            sb.append ("BRAM_SINGLE_MACRO_inst : BRAM_SINGLE_MACRO" + Moose_Utils.getLineSeparator () );
+            sb.append ("generic map (" + Moose_Utils.getLineSeparator () );
+
+            for (int subRow = 0; subRow < 64; subRow++)
+            {
+               String hexStr = Integer.toHexString(subRow);
+               if (hexStr.length() < 2)
+               {
+                  hexStr = "0" + hexStr;
+               }
+
+               hexStr = hexStr.toUpperCase();
+
+               String digitsDataStr = initLinesArrayList.get(initRow).substring(subRow * 64, (subRow + 1) * 64);
+
+               sb.append ("      INIT_" + hexStr + " => X\"" + digitsDataStr + "\"");
+
+               if (subRow < 64 - 1)
+                  sb.append ("," );
+               else
+                  sb.append (" )" );
+
+
+               sb.append (Moose_Utils.getLineSeparator () );
+            }
+
+            sb.append (Moose_Utils.getLineSeparator () );
+         }
+
+         //System.out.println (sb.toString() );
+
+         Moose_Utils.writeOrAppendStringToFile ("ram_memory.vhd", sb.toString(), false);
 
    }
 
