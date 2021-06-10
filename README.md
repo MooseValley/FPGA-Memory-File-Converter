@@ -1,7 +1,33 @@
 # FPGA Memory File Converter: Lattice XP2 FPGA to Xilinx Zynq FPGA
 
-My Github for this project:
+Welcome to the Github for this project:
 * https://github.com/MooseValley/FPGA-Memory-File-Converter
+
+
+## Samples of Input and Output:
+
+```
+**Lattice XP2 FPGA               Xilinx Zynq FPGA**
+
+#Format=AddrHex                  BRAM_SINGLE_MACRO_inst :
+#Depth=4096                      BRAM_SINGLE_MACRO
+#Width=32                           generic map (
+#AddrRadix=3                           INIT_00 => X"000000000501001010F0210100050101004410101100510010001010F001100F",
+#DataRadix=3
+0:68D
+24:80
+25:A
+26:7C1
+27:7C3
+28:7C1
+29:4A0
+2A:4D2
+2D:7C1
+101:564F4405
+```
+
+
+## Java Source Code and JAR:
 
 The source code, input data file, JAR file, etc are all here - but it is command line only (at this stage), so you wont see any GUI app when you run it.  No command line parameters at this stage.  Very rudimentary.
 
