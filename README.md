@@ -1,9 +1,9 @@
-# FPGA Memory File Converter
+# FPGA Memory File Converter: Lattice XP2 FPGA to Xilinx Zynq FPGA
 
 My Github for this project:
 * https://github.com/MooseValley/FPGA-Memory-File-Converter
 
-The source code, input data file, JAR file, etc are all here - but it is command line only, so you wont see any GUI app when you run it.
+The source code, input data file, JAR file, etc are all here - but it is command line only (at this stage), so you wont see any GUI app when you run it.  No command line parameters at this stage.  Very rudimentary.
 
 You can download a ZIP of everything by clicking the green "**Code**" button on the right, and selecting "Download ZIP".
 
