@@ -9,6 +9,7 @@ Welcome to the Github for this project:
 ```
 -----------------------------------------------------------------------------------------------
 Lattice XP2 FPGA | Xilinx Zynq FPGA
+    (input)      |    (output)
 -----------------------------------------------------------------------------------------------
                  |
 #Format=AddrHex  | BRAM_SINGLE_MACRO_inst : BRAM_SINGLE_MACRO
