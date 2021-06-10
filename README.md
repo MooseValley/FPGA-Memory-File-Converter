@@ -21,6 +21,6 @@ or here's a link to what is currently the latest AdoptOPEN JRE (free):
 * jdk8u292-b10, x86, MSI installer: https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jre_x86-32_windows_hotspot_8u292b10.msi
 * jdk8u292-b10, x64, MSI installer: https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jre_x64_windows_hotspot_8u292b10.msi
 
-Moose
+**Moose**
 <br>Moose's Software Valley, established July, 1996.
 <br>https://moosevalley.github.io/
