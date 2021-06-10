@@ -7,23 +7,23 @@ Welcome to the Github for this project:
 ## Samples of Input and Output:
 
 ```
-**Lattice XP2 FPGA               Xilinx Zynq FPGA**
-
-#Format=AddrHex                  BRAM_SINGLE_MACRO_inst :
-#Depth=4096                      BRAM_SINGLE_MACRO
-#Width=32                           generic map (
-#AddrRadix=3                           INIT_00 => X"000000000501001010F0210100050101004410101100510010001010F001100F",
-#DataRadix=3
-0:68D
-24:80
-25:A
-26:7C1
-27:7C3
-28:7C1
-29:4A0
-2A:4D2
-2D:7C1
-101:564F4405
+**Lattice XP2 FPGA  | Xilinx Zynq FPGA**
+                    |
+#Format=AddrHex     | BRAM_SINGLE_MACRO_inst : BRAM_SINGLE_MACRO
+#Depth=4096         | generic map (
+#Width=32           |   INIT_00 => X"000000000501001010F0210100050101004410101100510010001010F001100F",
+#AddrRadix=3        |   INIT_01 => X"0001101010101100400805080080400800800110010010000011001001000051",
+#DataRadix=3        |   INIT_02 => X"1001104111001105010101000201010040101111111101004010001040101010",
+0:68D               |   INIT_03 => X"0110011010100100211111111000100110101001000040101000001004000000",
+24:80               |   ::::
+25:A                |   INIT_3F => X"0000000000000000000000000000000000000000000000000000000000000000" )
+26:7C1              |
+27:7C3              |
+28:7C1              |
+29:4A0              |
+2A:4D2              |
+2D:7C1              |
+101:564F4405        |
 ```
 
 
