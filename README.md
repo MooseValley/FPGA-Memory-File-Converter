@@ -11,6 +11,9 @@ After you extract the ZIP to a folder on your PC - e.g. c:\Java - open a command
 
 c:\java>  java -jar Ep32Ram.jar
 
+
+## Java Runtime Environment (JRE)
+
 You need to have the Java Runtime Environment (JRE) installed on your machine.
 
 If you need the JRE, you can download from Oracle (but this requires you to create an account and faff around),
