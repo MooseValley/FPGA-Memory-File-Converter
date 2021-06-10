@@ -16,9 +16,12 @@ echo .
 
 echo Compile the Java code:
 "%dirlocation%javac.exe" ..\00__common_code\Network.java
-copy ..\00__common_code\*.class .
+copy ..\00__common_code\Network*.class .
 "%dirlocation%javac.exe" ..\00__common_code\Moose_Utils.java
-copy ..\00__common_code\*.class .
+copy ..\00__common_code\Moose_Utils*.class .
+REM "%dirlocation%javac.exe" ..\00__common_code\BuildNumberIncrementer.java
+REM copy ..\00__common_code\BuildNumberIncrementer*.class .
+
 
 REM Increment the Build Number
 REM "%dirlocation%java.exe" BuildNumberIncrementer

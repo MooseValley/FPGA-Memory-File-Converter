@@ -3,7 +3,15 @@ import java.util.ArrayList;
 
 public class Ep32Ram
 {
+   // *** CONSTANTS:
+   private static final String APPLICATION_VERSION          = "v0.0005"; //+ ", build: " +
+                                                              //BuildNumberIncrementer.getBuildNumberFromInsideJAR ();
+   private static final String APPLICATION_TITLE             = "FPGA Memory File Converter: Lattice XP2 FPGA to Xilinx Zynq FPG - " + APPLICATION_VERSION;
+   private static final String APPLICATION_AUTHOR            = "Mike O'Malley";
+
+
    private ArrayList<String> ep32RamArrayList;
+   private ArrayList<String> ep32RamIntermediateArrayList;
    private ArrayList<String> initLinesArrayList;
    private ArrayList<String> digitsArrayList;
 
@@ -16,7 +24,10 @@ public class Ep32Ram
 
    public void loadRamFromFile (String fileNameStr)
    {
-      ep32RamArrayList = new  ArrayList<>();
+      int priorNum = 0;
+
+      ep32RamArrayList             = new  ArrayList<>();
+      ep32RamIntermediateArrayList = new  ArrayList<>();
 
       Moose_Utils.loadArrayListFromFile (fileNameStr, ep32RamArrayList, false);
 
@@ -24,32 +35,57 @@ public class Ep32Ram
       // Remove everything before the ":", inclusive.
       // 0 pad on left to 8 bytes.
 
-      for (int k = ep32RamArrayList.size() - 1; k >= 0; k--)
+      for (int k = 0; k < ep32RamArrayList.size(); k++)
       {
          String lineStr = ep32RamArrayList.get(k);
 
+         /*
          if (lineStr.startsWith ("#") == true)
          {
             ep32RamArrayList.remove(k);
          }
+
          else
          {
-            if (lineStr.indexOf (":") >= 0)
+         */
+            if ((lineStr.startsWith ("#") == false) && (lineStr.indexOf (":") >= 0) )
             {
-               lineStr = lineStr.substring (lineStr.indexOf (":") + 1, lineStr.length() );
-               lineStr = lineStr.trim();
+               String hexNumStr = lineStr.substring (0, lineStr.indexOf (":") ).trim();
 
-               while (lineStr.length() < 8)
+               int currNum = Moose_Utils.hexStrToHexadecimalInt (hexNumStr, 0);
+
+               if (priorNum < currNum)
                {
-                  lineStr = "0" + lineStr;
+                  //System.out.println ("-> Adding " + (currNum - priorNum) + " of lines if '00000000' " +
+                  //                   "(priorNum: " + priorNum + ", currNum: " + currNum +
+                  //                   ", hex: "     + hexNumStr + ") ...");
+
+                  for (int gapCount = priorNum; gapCount < currNum; gapCount++)
+                  {
+                     ep32RamIntermediateArrayList.add ("00000000");
+                  }
                }
 
-               ep32RamArrayList.set (k, lineStr);
+               String dataStr = lineStr.substring (lineStr.indexOf (":") + 1, lineStr.length() ).trim();
+
+               while (dataStr.length() < 8)
+               {
+                  dataStr = "0" + dataStr;
+               }
+
+               //ep32RamArrayList.set (k, dataStr);
+               ep32RamIntermediateArrayList.add (dataStr);
+
+               //System.out.println ("-> Line: " + ep32RamIntermediateArrayList.size() + ": added data: " + dataStr);
+
+               priorNum = currNum;
             }
-         }
+         //}
       }
 
-      System.out.println (Moose_Utils.arrayListToStr (ep32RamArrayList, "", "\n") );
+      //System.out.println (Moose_Utils.arrayListToStr (ep32RamArrayList, "", "\n") );
+
+      Moose_Utils.saveArrayListToFile (ep32RamIntermediateArrayList, "ep32q_intermediate.txt");
 
 
 
@@ -62,11 +98,6 @@ public class Ep32Ram
             initLines[row][col] = '0';
          }
       }
-
-
-      System.out.println ("Size: " + ep32RamArrayList.size() + " * 8 = " + (ep32RamArrayList.size() * 8) );
-      System.out.println ((1.0 * ep32RamArrayList.size() * 8 / 64) );
-
 
 
       // Convert ep32RamArrayList to INIT lines.
@@ -129,10 +160,13 @@ public class Ep32Ram
       */
 
       int numCharsWithFullLinesOfData = 64 * 64;
-      int numZeroesToPad              = numCharsWithFullLinesOfData - ep32RamArrayList.size();
+      int numZeroesToPad              = numCharsWithFullLinesOfData - ep32RamIntermediateArrayList.size();
       int numFullLinesOfData          = numCharsWithFullLinesOfData / 64;
 
-      System.out.println ("Lines of Data:                        " + (1.0 * ep32RamArrayList.size() / 64) );
+      System.out.println ("Size: " + ep32RamIntermediateArrayList.size() + " * 8 = " + (ep32RamIntermediateArrayList.size() * 8) );
+      System.out.println ((1.0 * ep32RamIntermediateArrayList.size() * 8 / 64) );
+
+      System.out.println ("Lines of Data:                        " + (1.0 * ep32RamIntermediateArrayList.size() / 64) );
       System.out.println ("Zeroes to append to each line:        " + numZeroesToPad );
       System.out.println ("Resulting Full 64 byte lines of data: " + numFullLinesOfData );
 
@@ -142,9 +176,9 @@ public class Ep32Ram
       {
          StringBuilder sb    = new StringBuilder();
 
-         for (int row = 0; row < ep32RamArrayList.size(); row++)
+         for (int row = 0; row < ep32RamIntermediateArrayList.size(); row++)
          {
-            sb.append (ep32RamArrayList.get(row).charAt (col) );
+            sb.append (ep32RamIntermediateArrayList.get(row).charAt (col) );
          }
 
          for (int pad = 0; pad < numZeroesToPad; pad++)
@@ -231,6 +265,11 @@ public class Ep32Ram
 
    public static void main (String args[])
    {
+      System.out.println ("-------------------------------------------------------------------------------");
+      System.out.println (APPLICATION_TITLE);
+      System.out.println ("-------------------------------------------------------------------------------");
+      System.out.println ();
+
       Ep32Ram ep32 = new Ep32Ram ();
 
       ep32.loadRamFromFile ("ep32q.mem");
