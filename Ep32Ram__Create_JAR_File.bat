@@ -1,6 +1,6 @@
-REM-----------------------------
+REM -----------------------------
 REM Ep32Ram
-REM-----------------------------
+REM -----------------------------
 echo off
 cls
 
@@ -9,7 +9,7 @@ REM SET "dirlocation=%JAVA_HOME%\bin\"
 
 :STARTCOMPILE
 echo "%dirlocation%"
-del *.class /Q
+del /q *.class /Q
 echo Create the Manifest file:
 echo Main-Class: Ep32Ram >MANIFEST.MF
 echo .
@@ -34,8 +34,8 @@ REM add the BuildNumber.ini to JAR:
 "%dirlocation%jar.exe" cfm "Ep32Ram.jar" MANIFEST.MF BuildNumber.ini *.class ..\icons\*.gif ..\icons\*.png  "Ep32Ram*.txt"
 
 REM
-del *.class
-del ..\00__common_code\*.class
+del /q *.class
+del /q ..\00__common_code\*.class
 REM del *.gif
 
 :END
